@@ -32,5 +32,9 @@ module logicalunit(
     wire   out;
          
       //Todo: add you logic here
+begin
 
+assign out = (a)?((b)?(func[3]):func[2]):((b)?(func[1]):(func[0]));
+	
+end
 endmodule
