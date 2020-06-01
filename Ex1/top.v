@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Exercise #1 
-// Student Name:
-// Date: 
+// Student Name: ISIDORA RADENKOVIC
+// Date: June 1st, 2020
 //
 //  Description: In this exercise, you need to design a logical unit, where the  
 //  output acts according to the following truth table:
