@@ -38,20 +38,38 @@ initial
 
 initial begin
 
-rst = 1;
+rst = 0;
 enable = 1;
 direction = 1;
 err=0;
-counter_out_prev = 8'b11111111;
-counter_out = 8'b0;
+counter_out_prev = 8'b0;
+counter_out = 8'b1;
 
 forever begin
-#CLK_PERIOD
-if((rst==1&&counter_out!=0)||(rst==0&&enable==0&& counter_out!=counter_out_prev)||(rst==0&&enable==1&&direction==1&& !(counter_out==counter_out_prev+1 || (counter_out==0 && counter_out_prev== 8'b11111111))) || (rst==0&&enable==1&&direction==0&& !(counter_out==counter_out_prev-1 || (counter_out==8'b11111111 && counter_out_prev== 0))))
+counter_out_prev = counter_out;
+if(direction)
+	begin
+	direction = 0;
+		if (enable)
+		begin
+		rst =1;
+		end
+	enable = ~enable;
+	end
+else
+	begin
+	direction =1;
+	end
+
+#(CLK_PERIOD)
+
+if((rst &&counter_out!=0)||(rst==0&&enable==0&& counter_out!=counter_out_prev)||(rst==0&&enable==1&&direction==1&& !(counter_out==counter_out_prev+1 || (counter_out==0 && counter_out_prev== 8'b11111111))) || (rst==0&&enable==1&&direction==0&& !(counter_out==counter_out_prev-1 || (counter_out==8'b11111111 && counter_out_prev== 0))))
 begin
            $display("***TEST FAILED! rst=%d, enable=%d, direction= %d, counter_out=%d, counter_out_prev = %d ***",rst, enable, direction, counter_out, counter_out_prev);
            err=1;
          end
+
+
 end
 end
 //Todo: Finish test, check for success
