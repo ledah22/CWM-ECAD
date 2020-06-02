@@ -28,37 +28,35 @@ module counter(
     );
                     
     //Todo: add registers and wires, if needed
-	//reg [7:0] counter_out;
+	
 
     //Todo: add user logic
 
-always @(clk) begin
-//assign counter_out = (rst||counter_out==8'b11111111)?(8'b0):((enable)?((direction)?(counter_out +1):(counter_out //1)):counter_out);
+always @(posedge clk) begin
 
-if (rst) begin 
-counter_out <= 8'b0;
-end
+if (rst)  
+	counter_out <= 8'b0;
 else
-begin
-if (enable)
-begin
-if (direction)
-begin
-if (counter_out==8'b11111111)
-counter_out <= 8'b0;
-else
-counter_out <= counter_out +1;
-end
-else
-begin
-if (counter_out==8'b0)
-counter_out <= 8'b11111111;
-else
-counter_out <= counter_out -1;
-end
+	begin
+	if (enable)
+		begin
+		if (direction)
+			begin
+			if (counter_out==8'b11111111)
+			counter_out <= 8'b0;
+			else
+			counter_out <= counter_out +1;
+			end
+		else
+			begin
+			if (counter_out==8'b0)
+			counter_out <= 8'b11111111;
+			else
+			counter_out <= counter_out -1;
+			end
+
+		end
+	end
 
 end
-end
-end
-
 endmodule
