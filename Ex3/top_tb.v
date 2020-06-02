@@ -17,7 +17,7 @@ module top_tb(
 	parameter CLK_PERIOD = 10;
 
 //Todo: Regitsers and wires
-	reg [7:0] counter_out;
+	//reg [7:0] counter_out; --> DON'T DO THIS TWICE
 	reg [7:0] counter_out_prev;
 	reg err;
 	reg clk;
@@ -42,8 +42,6 @@ rst = 0;
 enable = 1;
 direction = 1;
 err=0;
-counter_out_prev = 8'b0;
-counter_out = 8'b1;
 
 forever begin
 counter_out_prev = counter_out;
@@ -84,5 +82,5 @@ else 	begin $display("***Test failed... :(( ***");
 	end
       end
 //Todo: Instantiate counter module
- counter top();
+ counter top(.clk (clk), .rst (rst), .enable (enable), .direction (direction), .counter_out (counter_out));
 endmodule 
