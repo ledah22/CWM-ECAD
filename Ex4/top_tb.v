@@ -34,7 +34,7 @@ end
 
 //Testing logic
 initial begin
-
+err=0;
 rst=1;
 button = 0;
 count=0;
@@ -43,10 +43,10 @@ forever begin
 
 throw_prev = throw;
 if(count == 10)
-begin
-count =-1;
-rst = ~rst;
-end
+	begin
+	count =-1;
+	rst = ~rst;
+	end
 count = count+1;
 button = ~button;
 
@@ -73,5 +73,5 @@ else 	begin $display("***Test failed... :(( ***");
 	end
       end
 //Instantiate counter module
-counter top(.clk (clk), .rst (rst), .button (button), .throw (throw));
+dice top(.clk (clk), .rst (rst), .button (button), .throw (throw));
 endmodule
