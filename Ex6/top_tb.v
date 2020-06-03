@@ -35,8 +35,8 @@ end
 
 //Testing logic
 
-//traffic_lights top4(clk, temp1[2], temp1[1], temp1[0]);
-//dice top5(clk, rst, button, temp2);
+//traffic_lights6 top4(clk, temp1[2], temp1[1], temp1[0]);
+//dice6 top5(clk, rst, button, temp2);
 
 initial begin
 
