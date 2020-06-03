@@ -35,8 +35,8 @@ wire [2:0] di;
 
 
 
-traffic_lights top1(clk, tf[2], tf[1], tf[0]);
-dice top2(clk, rst, button, di);
+traffic_lights6 top1(clk, tf[2], tf[1], tf[0]);
+dice6 top2(clk, rst, button, di);
 assign result = (sel)?(tf):(di);
 
 endmodule
