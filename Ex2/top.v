@@ -31,8 +31,8 @@ module mux(
     wire out;
 
     //Todo: define your logic here 
-begin
+
 assign out = (sel)?(b):(a);
-end                
+              
       
 endmodule
