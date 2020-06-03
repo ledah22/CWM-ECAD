@@ -35,44 +35,13 @@ assign green = (lights == 2'b10)? (1'b1):(1'b0);
 always @(posedge clk)
 begin
 
-if (lights==2'b11)
-lights <= 2'b0;
-else 
-lights <= lights+1;
 
-/*
-if (lights==2'b0)
-	begin
-	red <= 1;
-	amber <= 0;
-	green <= 0;
-	end
-else 
-begin
-	if (lights==2'b01)
-		begin
-		red <= 1;
-		amber <= 1;
-		green <= 0;
-		end
-	else 
-	begin
-		if(lights==2'b10)
-			begin
-			red <= 0;
-			amber <= 0;
-			green <= 1;
-			end
-		else
-		begin
-			if(lights==2'b11)
-			red <= 0;
-			amber <= 1;
-			green <= 0;
-		end
-	end
-end
-*/
+if (lights==2'b0||lights==2'b1||lights==2'b10)
+lights <= lights+1;
+else
+lights <= 2'b0;
+
+
 end
 
 endmodule
