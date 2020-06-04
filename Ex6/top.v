@@ -21,6 +21,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 `timescale 1ns/100ps
+`include "dice6.v"
+`include "traffic_lights6.v"
 
 module MuxDiceTraffic(
 input rst,
@@ -35,8 +37,8 @@ wire [2:0] di;
 
 
 
-traffic_lights6 top1(clk, tf[2], tf[1], tf[0]);
-dice6 top2(clk, rst, button, di);
+traffic_lights traffic_lights6(clk, tf[2], tf[1], tf[0]);
+dice dice6(clk, rst, button, di);
 assign result = (sel)?(tf):(di);
 
 endmodule
