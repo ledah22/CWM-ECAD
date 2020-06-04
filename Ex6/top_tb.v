@@ -20,9 +20,10 @@ reg clk;
 reg rst;
 reg button;
 reg sel;
-reg [2:0] check;
-reg [2:0] temp1;
-reg [2:0] temp2;
+reg [2:0] count;
+reg [2:0] result_prev;
+reg [2:0] result_now;
+
 //Clock
 initial 
 begin
@@ -35,28 +36,61 @@ end
 
 //Testing logic
 
-//traffic_lights6 top4(clk, temp1[2], temp1[1], temp1[0]);
-//dice6 top5(clk, rst, button, temp2);
-
 initial begin
-
-err =0;
-
+err=0;
+rst =0;
+button =0;
+sel = 0;
+count =0;
+#(2*CLK_Period)
 
 forever begin
 
+result_prev = result;
 #(CLK_Period)
+result_now = result;
 
-if (sel)
-begin
-if (check!=temp1)
-err=1;
-end
+
+
+if(sel)
+		begin
+
+		if(!((result_prev[2]&&!result_prev[1]&&!result_prev[0]&&result_now==3'b110)||(result_prev[2]&& result_prev[1]&&!result_prev[0]&&result_now== 3'b001)||(!result_prev[2]&&!result_prev[1]&&result_prev[0]&&result_now==3'b010)||(!result_prev[2]&&result_prev[1]&&!result_prev[0]&&result_now==3'b100)))
+			begin
+           		$display("***TEST FAILED! sel = %d, lights_before=%d-%d-%d but ligths_now = %d%d%d***",sel, result_prev[2], result_prev[1], result_prev[0], result_now[2], result_now[1], result_now[0]);
+           err=1;
+         		end
+		end
+else
+	begin
+if(rst)
+	begin
+	if(result_now!= 3'b0)
+		begin
+           	$display("***TEST FAILED! rst = %d and sel =%d, but result_now=%d***", rst, sel, result_now);
+           	err=1;
+         	end
+	end
 else
 begin
-if (check!=temp2)
-err=1;
+	if((rst&&result_now !=3'b0)||(!rst && !button && !(((result_prev==3'b0||result_prev==3'b111)&& result_now==3'b0)||(result_now==result_prev))) || (!rst && button && !(((result_prev==3'b0||result_prev==3'b111||result_prev==3'b110)&& result_now==3'b0)||(result_now==result_prev+1))))
+	begin
+           $display("***TEST FAILED! sel= %d, rst=%d, button=%d, result_now=%d, result_prev = %d ***",sel, rst, button, result_now, result_prev);
+           err=1;
+         end
 end
+
+if(count == 3'b101)
+		begin
+		count =-1;
+		rst = ~rst;
+		end
+	count = count+1;
+	button = ~button;
+	
+end
+
+sel = ~sel;
 
 end
 end
@@ -64,7 +98,7 @@ end
 //Success check
 
 initial begin
-        #50 
+        #100
         if (err==0)begin
           $display("***TEST PASSED! :) ***");
         $finish;
@@ -76,5 +110,5 @@ else 	begin $display("***Test failed... :(( ***");
 
 
 //Instantiate
-MuxDiceTraffic top(rst, clk, button, sel, check);
+MuxDiceTraffic top(rst, clk, button, sel, result);
 endmodule
