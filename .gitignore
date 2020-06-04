@@ -11,7 +11,7 @@ vivado*.*
 *.cache/
 *.hw/
 *.sim/
-*.xpr/
+*.xpr
 *.runs/
 *.ip_user_files/
 

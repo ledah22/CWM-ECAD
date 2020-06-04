@@ -8,7 +8,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 `timescale 1ns/100ps
 
-module traffic_lights_tb();
+module traffic_lights_tb(
+);
 
 //Parameters
 parameter CLK_Period = 10;
