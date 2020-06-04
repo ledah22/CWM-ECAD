@@ -23,6 +23,7 @@ reg sel;
 reg [2:0] count;
 reg [2:0] result_prev;
 reg [2:0] result_now;
+wire [2:0] result;
 
 //Clock
 initial 
@@ -38,14 +39,16 @@ end
 
 initial begin
 err=0;
-rst =0;
+rst =1;
 button =0;
-sel = 0;
+sel = 1;
 count =0;
-#(2*CLK_Period)
+//#(CLK_Period)
 
 forever begin
 
+
+#(CLK_Period)
 result_prev = result;
 #(CLK_Period)
 result_now = result;
@@ -78,18 +81,16 @@ begin
            $display("***TEST FAILED! sel= %d, rst=%d, button=%d, result_now=%d, result_prev = %d ***",sel, rst, button, result_now, result_prev);
            err=1;
          end
+end	
 end
 
-if(count == 3'b101)
+if(count == 3'b100)
 		begin
-		count =-1;
+		count =0;
 		rst = ~rst;
 		end
 	count = count+1;
 	button = ~button;
-	
-end
-
 sel = ~sel;
 
 end
@@ -98,7 +99,7 @@ end
 //Success check
 
 initial begin
-        #100
+        #200
         if (err==0)begin
           $display("***TEST PASSED! :) ***");
         $finish;
@@ -110,5 +111,5 @@ else 	begin $display("***Test failed... :(( ***");
 
 
 //Instantiate
-MuxDiceTraffic top(rst, clk, button, sel, result);
+MuxDiceTraffic top(.rst (rst), .clk (clk), .button (button), .sel (sel), .result(result));
 endmodule
