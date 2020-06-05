@@ -14,30 +14,12 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 `timescale 1ns/100ps
-
-
-module multiply(
+module Multiply(
 input clk,
-input wire [2:0] a,
-input wire [2:0] b,
-input enable,
-output wire [4:0] result);
-
-second your_instance_name (
-  .clka(clka),    // input wire clka
-  .ena(ena),      // input wire ena
-  .wea(wea),      // input wire [0 : 0] wea
-  .addra(addra),  // input wire [5 : 0] addra
-  .dina(dina),    // input wire [5 : 0] dina
-  .douta(douta)  // output wire [5 : 0] douta
-);
+input reg [2:0] a,
+input reg [2:0] b,
+input read,
+output reg [4:0] result);
 
 
-/*always @(posedge clk)
-begin
-if(enable)
-result = a*b;
-end
-*/
 endmodule
-
